@@ -6,61 +6,40 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Categories from "../components/categories";
-import Recipes from "../components/recipes"; // ✅ FIXED IMPORT
+import Recipes from "../components/recipes";
 
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState("Chicken");
 
-  const [categories, setCategories] = useState([
-    {
-      idCategory: "1",
-      strCategory: "Beef",
-      strCategoryThumb: "https://www.themealdb.com/images/category/beef.png",
-    },
-    {
-      idCategory: "2",
-      strCategory: "Chicken",
-      strCategoryThumb:
-        "https://www.themealdb.com/images/category/chicken.png",
-    },
-    {
-      idCategory: "3",
-      strCategory: "Dessert",
-      strCategoryThumb:
-        "https://www.themealdb.com/images/category/dessert.png",
-    },
-    {
-      idCategory: "4",
-      strCategory: "Lamb",
-      strCategoryThumb:
-        "https://www.themealdb.com/images/category/lamb.png",
-    },
-    {
-      idCategory: "5",
-      strCategory: "Miscellaneous",
-      strCategoryThumb:
-        "https://www.themealdb.com/images/category/miscellaneous.png",
-    },
-  ]);
+  const categories = [
+    { idCategory: "1", strCategory: "Beef", strCategoryThumb: "" },
+    { idCategory: "2", strCategory: "Chicken", strCategoryThumb: "" },
+    { idCategory: "3", strCategory: "Dessert", strCategoryThumb: "" },
+    { idCategory: "4", strCategory: "Lamb", strCategoryThumb: "" },
+    { idCategory: "5", strCategory: "Pasta", strCategoryThumb: "" },
+    { idCategory: "6", strCategory: "Seafood", strCategoryThumb: "" },
+    { idCategory: "7", strCategory: "Vegan", strCategoryThumb: "" },
+    { idCategory: "8", strCategory: "Vegetarian", strCategoryThumb: "" },
+    { idCategory: "9", strCategory: "Breakfast", strCategoryThumb: "" },
+    { idCategory: "10", strCategory: "My Food", strCategoryThumb: "" },
+  ];
 
-  const [allFood, setAllFood] = useState([
+  const [allFood] = useState([
     {
-      category: "Beef",
       idFood: "1",
-      recipeName: "Beef and Mustard Pie",
-      recipeInstructions: "Cook beef...",
-      recipeImage:
-        "https://images.unsplash.com/photo-1587248720327-8eb72564be1e",
-      ingredients: [{ ingredientName: "Beef", measure: "1kg" }],
+      recipeName: "Chicken Curry",
+      category: "Chicken",
+      recipeImage: "https://via.placeholder.com/300",
+      recipeInstructions: "Cook chicken with spices...",
+      ingredients: [{ ingredientName: "Chicken", measure: "500g" }],
     },
     {
-      category: "Chicken",
       idFood: "2",
-      recipeName: "Chicken Curry",
-      recipeInstructions: "Cook chicken...",
-      recipeImage:
-        "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398",
-      ingredients: [{ ingredientName: "Chicken", measure: "500g" }],
+      recipeName: "Beef Steak",
+      category: "Beef",
+      recipeImage: "https://via.placeholder.com/300",
+      recipeInstructions: "Grill beef steak...",
+      ingredients: [{ ingredientName: "Beef", measure: "400g" }],
     },
   ]);
 
@@ -76,29 +55,24 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <StatusBar style="dark" />
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
-        testID="scrollContainer"
-      >
-        <View style={styles.headerContainer} testID="headerContainer">
+      <ScrollView testID="scrollContainer" showsVerticalScrollIndicator={false}>
+        
+        {/* Header */}
+        <View style={styles.header} testID="headerContainer">
           <Image
-            source={{
-              uri: "https://cdn.pixabay.com/photo/2017/02/23/13/05/avatar-2092113_1280.png",
-            }}
+            source={{ uri: "https://via.placeholder.com/100" }}
             style={styles.avatar}
           />
-          <Text style={styles.greetingText}>Hello, User!</Text>
+          <Text style={styles.greeting}>Hello, User!</Text>
         </View>
 
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Make your own food,</Text>
-          <Text style={styles.subtitle}>
-            stay at <Text style={styles.highlight}>home</Text>
-          </Text>
+        {/* Title */}
+        <View style={styles.titleContainer} testID="titleContainer">
+          <Text style={styles.mainTitle}>Make your own food</Text>
+          <Text style={styles.subTitle}>Stay at home</Text>
         </View>
 
-        {/* ✅ FIXED: Categories Render */}
+        {/* Categories */}
         <View testID="categoryList">
           <Categories
             categories={categories}
@@ -107,10 +81,11 @@ export default function HomeScreen() {
           />
         </View>
 
-        {/* ✅ FIXED: Recipes Render */}
+        {/* Recipes */}
         <View testID="foodList">
           <Recipes foods={filteredfoods} categories={categories} />
         </View>
+
       </ScrollView>
     </View>
   );
@@ -119,49 +94,33 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    paddingTop: hp(5),
   },
-  scrollContainer: {
-    paddingBottom: 50,
-    paddingTop: hp(14),
-  },
-  headerContainer: {
-    marginHorizontal: wp(4),
+  header: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: hp(2),
-    marginTop: hp(-8.5),
+    paddingHorizontal: wp(5),
   },
   avatar: {
+    width: hp(5),
     height: hp(5),
-    width: hp(5.5),
+    borderRadius: hp(2.5),
+    marginRight: 10,
   },
-  greetingText: {
-    fontSize: hp(1.7),
-    color: "#52525B",
+  greeting: {
+    fontSize: hp(2.2),
     fontWeight: "600",
-    backgroundColor: "#F3F4F6",
-    paddingHorizontal: wp(2),
-    paddingVertical: hp(0.5),
-    borderRadius: 9999,
-    textAlign: "center",
   },
   titleContainer: {
-    marginHorizontal: wp(4),
-    marginBottom: hp(2),
+    paddingHorizontal: wp(5),
+    marginTop: hp(2),
   },
-  title: {
-    fontSize: hp(3.8),
-    fontWeight: "600",
-    color: "#52525B",
+  mainTitle: {
+    fontSize: hp(3),
+    fontWeight: "bold",
   },
-  subtitle: {
-    fontSize: hp(3.8),
-    fontWeight: "600",
-    color: "#52525B",
-  },
-  highlight: {
-    color: "#F59E0B",
+  subTitle: {
+    fontSize: hp(2),
+    color: "gray",
   },
 });
